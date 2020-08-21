@@ -93,15 +93,52 @@ class SortingRobot:
         return self._light == "ON"
     
     def get_smallest(self):
+        # move thru storage and swapping item if new one is smaller
+        # ends when robot reaches end of storage
+        # at end of run, robot will have smallest item
         while self.can_move_right():
             self.move_right()
             if self.compare_item() == 1:
+                self.swap_item()
+    
+    def take_to_space(self):
+        # robot takes current item held to place in storage
+        # places item there and now is holding nothing
+        while self.compare_item() is not None:
+            self.move_left()
+            if self.compare_item() == None:
+                self.swap_item()
+
+    def get_next(self):
+        # if robot is at end of storage, turn the lights off
+        if not self.can_move_right():
+            self.set_light_off()
+            return
+        # moves right and if at end of storage turn the light off
+        # if still not at end, pick up next item
+        else:
+            self.move_right()
+            if not self.can_move_right():
+                self.set_light_off()
+                return
+            else:
                 self.swap_item()
 
     def sort(self):
         """
         Sort the robot's list.
         """
+        if not self.can_move_right():
+            return
+        self.swap_item()
+        self.set_light_on()
+        while self.light_is_on():
+            # robot finds smallest item in unsorted storage
+            # places smallest item in open spot
+            # moves to next item, picks it up, leaves space
+            self.get_smallest()
+            self.take_to_space()
+            self.get_next()
         
 
 
