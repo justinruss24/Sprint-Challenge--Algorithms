@@ -15,4 +15,9 @@ O(n) -- This runtime complexity is O(n) because the number of operations will in
 
 ## Exercise II
 
-
+- Start on the middle floor & throw an egg off of it.
+- If the egg breaks, go to the floor between the current floor & the bottom floor and throw another egg.
+- Repeat step 2 until the egg does not break.
+- If the egg does not break, go to a floor between the current floor & the lowest floor where the egg broke.
+- Repeat this until the next lowest floor where the egg breaks, and the current floor are next to each other.
+- This will be runtime complexity of O(log n) as it is a binary search strategy.
